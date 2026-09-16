@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze - Global World Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-canvas">
+        
+        <!-- ================= 1. ONBOARDING / WELCOME VIEW ================= -->
+        <section id="welcome-view" class="view-screen">
+            <main class="onboarding-container">
+                <!-- Left 3D Card -->
+                <div class="card-preview">
+                    <div class="card-inner">
+                        <img src="assets/umbrella.png" alt="Breeze Umbrella 3D" class="floating-umbrella">
+                    </div>
+                </div>
+
+                <!-- Right Brand Content -->
+                <div class="content-section">
+                    <div class="brand-header">
+                        <div class="mini-logo">
+                            <img src="assets/umbrella.png" alt="Breeze Mini Logo">
+                        </div>
+                        <h1 class="brand-title">Breeze</h1>
+                        <p class="brand-subtitle">Global Weather App</p>
+                    </div>
+
+                    <div class="action-area">
+                        <button id="get-started-btn" class="btn-primary" type="button">
+                            <span>Get started</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- ================= 2. MAIN APP SHELL (SIDEBAR + TABS) ================= -->
+        <section id="dashboard-view" class="view-screen active">
+            <div class="dashboard-shell">
+                
+                <!-- Left Navigation Sidebar -->
+                <aside class="sidebar-nav">
+                    <div class="sidebar-logo">
+                        <button class="logo-btn" id="nav-home-btn" title="Home / Welcome Screen">
+                            <img src="assets/umbrella.png" alt="Breeze Logo">
+                        </button>
+                    </div>
+
+                    <nav class="nav-menu">
+                        <button class="nav-item active" data-tab="weather" id="tab-btn-weather" title="Weather">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                                <path d="M8 19v2"/>
+                                <path d="M12 19v2"/>
+                                <path d="M16 19v2"/>
+                            </svg>
+                            <span>Weather</span>
+                        </button>
+
+                        <button class="nav-item" data-tab="cities" id="tab-btn-cities" title="Countries & Cities">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                            <span>Cities</span>
+                        </button>
+
+                        <button class="nav-item" data-tab="map" id="tab-btn-map" title="Global Map">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                                <line x1="9" y1="3" x2="9" y2="18"/>
+                                <line x1="15" y1="6" x2="15" y2="21"/>
+                            </svg>
+                            <span>Map</span>
+                        </button>
+
+                        <button class="nav-item" data-tab="settings" id="tab-btn-settings" title="Settings">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="21" x2="4" y2="14"/>
+                                <line x1="4" y1="10" x2="4" y2="3"/>
+                                <line x1="12" y1="21" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12" y2="3"/>
+                                <line x1="20" y1="21" x2="20" y2="16"/>
+                                <line x1="20" y1="12" x2="20" y2="3"/>
+                                <line x1="1" y1="14" x2="7" y2="14"/>
+                                <line x1="9" y1="8" x2="15" y2="8"/>
+                                <line x1="17" y1="16" x2="23" y2="16"/>
+                            </svg>
+                            <span>Settings</span>
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- Main Content Pane -->
+                <div class="content-container">
+
+                    <!-- ================= TAB 1: WEATHER TAB ================= -->
+                    <main class="dashboard-body tab-pane active" id="pane-weather">
+                        <!-- Middle Column -->
+                        <div class="main-column">
+                            
+                            <!-- Search Bar -->
+                            <div class="search-wrapper">
+                                <div class="search-input-box">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        id="city-search-input" 
+                                        class="search-input" 
+                                        placeholder="Search any city or country worldwide..."
+                                        autocomplete="off"
+                                    >
+                                    <button id="city-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                </div>
+                                <div id="search-spinner" class="search-spinner hidden"></div>
+                                <div id="search-dropdown" class="search-dropdown hidden"></div>
+                            </div>
+
+                            <!-- Current Weather Hero Card -->
+                            <div class="current-weather-hero">
+                                <div class="hero-info">
+                                    <div class="city-title-row">
+                                        <h2 class="city-name" id="current-city-name">Karachi</h2>
+                                        <span class="live-badge" id="current-city-badge">🇵🇰 PAKISTAN</span>
+                                    </div>
+                                    <div class="time-and-rain">
+                                        <span class="city-live-clock" id="current-live-clock">--:-- --</span>
+                                        <span class="time-dot">•</span>
+                                        <span class="rain-chance" id="current-rain-chance">Chance of rain: 0%</span>
+                                    </div>
+                                    <div class="temperature-display" id="current-temp">31°</div>
+                                </div>
+                                <div class="hero-graphic">
+                                    <img src="assets/sun.png" alt="Current Weather" id="current-weather-icon" class="main-weather-img">
+                                </div>
+                            </div>
+
+                            <!-- VIEW MODE A: DEFAULT COMPACT VIEW -->
+                            <div id="weather-compact-view" class="weather-sub-view active">
+                                <!-- Today's Hourly Forecast Card -->
+                                <section class="card-widget hourly-forecast-card">
+                                    <div class="widget-header">
+                                        <h3 class="widget-title">TODAY'S FORECAST</h3>
+                                        <span class="hourly-hint" id="hourly-current-date">Today</span>
+                                    </div>
+                                    <div class="hourly-list" id="hourly-forecast-list">
+                                        <!-- 6 Hourly items rendered dynamically -->
+                                    </div>
+                                </section>
+
+                                <!-- Air Conditions Card (Compact 4 Grid) -->
+                                <section class="card-widget air-conditions-card">
+                                    <div class="widget-header">
+                                        <h3 class="widget-title">AIR CONDITIONS</h3>
+                                        <button class="btn-see-more" id="see-more-btn">See more</button>
+                                    </div>
+                                    
+                                    <div class="conditions-grid">
+                                        <!-- Real Feel -->
+                                        <div class="condition-item">
+                                            <div class="condition-header">
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                                                </svg>
+                                                <span class="condition-label">Real Feel</span>
+                                            </div>
+                                            <div class="condition-value" id="real-feel-val">30°</div>
+                                        </div>
+
+                                        <!-- Wind -->
+                                        <div class="condition-item">
+                                            <div class="condition-header">
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+                                                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+                                                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                                                </svg>
+                                                <span class="condition-label">Wind</span>
+                                            </div>
+                                            <div class="condition-value" id="wind-val">0.2 km/h</div>
+                                        </div>
+
+                                        <!-- Chance of rain -->
+                                        <div class="condition-item">
+                                            <div class="condition-header">
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                                </svg>
+                                                <span class="condition-label">Chance of rain</span>
+                                            </div>
+                                            <div class="condition-value" id="chance-rain-val">0%</div>
+                                        </div>
+
+                                        <!-- UV Index -->
+                                        <div class="condition-item">
+                                            <div class="condition-header">
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="4"/>
+                                                    <path d="M12 2v2"/>
+                                                    <path d="M12 20v2"/>
+                                                    <path d="m4.93 4.93 1.41 1.41"/>
+                                                    <path d="m17.66 17.66 1.41 1.41"/>
+                                                    <path d="M2 12h2"/>
+                                                    <path d="M20 12h2"/>
+                                                    <path d="m6.34 17.66-1.41 1.41"/>
+                                                    <path d="m19.07 4.93-1.41 1.41"/>
+                                                </svg>
+                                                <span class="condition-label">UV Index</span>
+                                            </div>
+                                            <div class="condition-value" id="uv-index-val">3</div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- VIEW MODE B: EXPANDED DETAILED AIR CONDITIONS (8-CARD GRID) -->
+                            <div id="weather-expanded-view" class="weather-sub-view">
+                                <div class="expanded-conditions-header">
+                                    <span class="expanded-title">AIR CONDITIONS DETAILS</span>
+                                    <button class="btn-see-more btn-see-less" id="see-less-btn">Back / See less</button>
+                                </div>
+                                <div class="expanded-cards-grid">
+                                    <!-- 1. UV INDEX -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                                            <span class="metric-name">UV INDEX</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-uv-val">3</div>
+                                    </div>
+
+                                    <!-- 2. WIND -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                                            <span class="metric-name">WIND</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-wind-val">0.2 km/h</div>
+                                    </div>
+
+                                    <!-- 3. HUMIDITY -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                                            <span class="metric-name">HUMIDITY</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-humidity-val">56%</div>
+                                    </div>
+
+                                    <!-- 4. VISIBILITY -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                            <span class="metric-name">VISIBILITY</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-visibility-val">12 km</div>
+                                    </div>
+
+                                    <!-- 5. FEELS LIKE -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                                            <span class="metric-name">FEELS LIKE</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-feels-val">30°</div>
+                                    </div>
+
+                                    <!-- 6. CHANCE OF RAIN -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                            <span class="metric-name">CHANCE OF RAIN</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-rain-val">0%</div>
+                                    </div>
+
+                                    <!-- 7. PRESSURE -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.8 5.6-5.6 2.8 2.8-5.6z"/></svg>
+                                            <span class="metric-name">PRESSURE</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-pressure-val">1008 hPa</div>
+                                    </div>
+
+                                    <!-- 8. SUNSET -->
+                                    <div class="detail-metric-card">
+                                        <div class="metric-top">
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10V2"/><path d="m4.93 10.93 1.41-1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41-1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
+                                            <span class="metric-name">SUNSET</span>
+                                        </div>
+                                        <div class="metric-value" id="exp-sunset-val">20:58</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column: Forecast Column -->
+                        <div class="side-column">
+                            
+                            <!-- When expanded, Top shows 3-hour Today's Forecast -->
+                            <section class="card-widget hourly-forecast-card expanded-side-widget" id="side-hourly-card">
+                                <div class="widget-header">
+                                    <h3 class="widget-title">TODAY'S FORECAST</h3>
+                                </div>
+                                <div class="hourly-list side-hourly-grid" id="side-hourly-list">
+                                    <!-- 3 hourly items -->
+                                </div>
+                            </section>
+
+                            <!-- 7-Day Forecast Card -->
+                            <section class="card-widget weekly-forecast-card">
+                                <div class="widget-header">
+                                    <h3 class="widget-title">7-DAY FORECAST</h3>
+                                </div>
+                                <div class="weekly-list" id="weekly-forecast-list">
+                                    <!-- 7 Days rendered dynamically -->
+                                </div>
+                            </section>
+
+                        </div>
+
+                    </main>
+
+                    <!-- ================= TAB 2: CITIES TAB (WORLDWIDE & COUNTRIES) ================= -->
+                    <main class="cities-layout tab-pane" id="pane-cities">
+                        
+                        <!-- Left Cities List Column -->
+                        <div class="cities-list-column">
+                            <!-- Search Bar inside Cities -->
+                            <div class="search-wrapper">
+                                <div class="search-input-box">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        id="cities-tab-search-input" 
+                                        class="search-input" 
+                                        placeholder="Search by city or country name..."
+                                        autocomplete="off"
+                                    >
+                                    <button id="cities-tab-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                </div>
+                                <div id="cities-search-spinner" class="search-spinner hidden"></div>
+                                <div id="cities-search-dropdown" class="search-dropdown hidden"></div>
+                            </div>
+
+                            <!-- Country Filter Bar -->
+                            <div class="country-filter-bar" id="country-filter-bar">
+                                <button class="filter-chip active" data-country="all">🌐 All Countries</button>
+                                <button class="filter-chip" data-country="Pakistan">🇵🇰 Pakistan</button>
+                                <button class="filter-chip" data-country="UAE">🇦🇪 UAE & Saudi</button>
+                                <button class="filter-chip" data-country="UK">🇬🇧 UK</button>
+                                <button class="filter-chip" data-country="USA">🇺🇸 USA</button>
+                                <button class="filter-chip" data-country="Turkey">🇹🇷 Turkey</button>
+                                <button class="filter-chip" data-country="Japan">🇯🇵 Japan</button>
+                                <button class="filter-chip" data-country="Canada">🇨🇦 Canada</button>
+                                <button class="filter-chip" data-country="Europe">🇪🇺 Europe</button>
+                                <button class="filter-chip" data-country="Australia">🇦🇺 Australia</button>
+                            </div>
+
+                            <!-- Worldwide Cities List -->
+                            <div class="cities-cards-container" id="cities-cards-list">
+                                <!-- City cards rendered dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Right Selected City Weather Detail Panel -->
+                        <div class="city-detail-column">
+                            <div class="city-detail-card">
+                                
+                                <!-- Header Section -->
+                                <div class="city-detail-header">
+                                    <div class="city-detail-title-group">
+                                        <div class="city-title-row">
+                                            <h2 class="detail-city-name" id="detail-city-name">Karachi</h2>
+                                            <span class="live-badge" id="detail-city-badge">🇵🇰 PAKISTAN</span>
+                                        </div>
+                                        <div class="time-and-rain">
+                                            <span class="detail-live-clock" id="detail-live-clock">--:-- --</span>
+                                            <span class="time-dot">•</span>
+                                            <span class="detail-rain-chance" id="detail-rain-chance">Chance of rain: 0%</span>
+                                        </div>
+                                        <div class="detail-temp" id="detail-temp">31°</div>
+                                    </div>
+                                    <div class="detail-graphic">
+                                        <img src="assets/sun.png" alt="Weather condition" id="detail-weather-icon" class="detail-hero-img">
+                                    </div>
+                                </div>
+
+                                <div class="detail-divider"></div>
+
+                                <!-- Today's Forecast (3 Hourly Slots) -->
+                                <div class="detail-section">
+                                    <div class="widget-header">
+                                        <h4 class="detail-section-title">TODAY'S FORECAST</h4>
+                                    </div>
+                                    <div class="detail-hourly-grid" id="detail-hourly-list">
+                                        <!-- 3 Hourly items rendered dynamically -->
+                                    </div>
+                                </div>
+
+                                <div class="detail-divider"></div>
+
+                                <!-- 7-Day Forecast Record -->
+                                <div class="detail-section">
+                                    <div class="widget-header">
+                                        <h4 class="detail-section-title">7-DAY FORECAST</h4>
+                                    </div>
+                                    <div class="detail-3day-list" id="detail-3day-list">
+                                        <!-- Weekly items rendered dynamically -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </main>
+
+                    <!-- ================= TAB 3: MAP VIEW (GLOBAL WEATHER MAP) ================= -->
+                    <main class="map-layout tab-pane" id="pane-map">
+                        
+                        <!-- Left Map Canvas Area -->
+                        <div class="map-main-column">
+                            <!-- Map Search Bar -->
+                            <div class="search-wrapper">
+                                <div class="search-input-box">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        id="map-search-input" 
+                                        class="search-input" 
+                                        placeholder="Search any country or city on map..."
+                                        autocomplete="off"
+                                    >
+                                    <button id="map-search-btn" class="search-submit-btn" title="Search Region">Search</button>
+                                </div>
+                                <div id="map-search-spinner" class="search-spinner hidden"></div>
+                                <div id="map-search-dropdown" class="search-dropdown hidden"></div>
+                            </div>
+
+                            <!-- Map Region Selector Bar -->
+                            <div class="map-region-bar" id="map-region-bar">
+                                <button class="region-pill active" data-region="pakistan">🇵🇰 Pakistan</button>
+                                <button class="region-pill" data-region="middle_east">🌍 Middle East</button>
+                                <button class="region-pill" data-region="europe">🇪🇺 Europe</button>
+                                <button class="region-pill" data-region="america">🇺🇸 Americas</button>
+                                <button class="region-pill" data-region="asia">🌏 Asia Pacific</button>
+                            </div>
+
+                            <!-- Interactive Map Canvas Card -->
+                            <div class="interactive-map-card" id="map-interactive-container">
+                                
+                                <!-- Done Button (Top Left) -->
+                                <button class="map-btn-done" id="map-done-btn">Done</button>
+
+                                <!-- Topographical Terrain SVG Map -->
+                                <div class="map-terrain-viewport" id="map-terrain-viewport">
+                                    <svg class="map-terrain-svg" id="map-svg-element" viewBox="0 0 800 600" preserveAspectRatio="none">
+                                        <rect width="800" height="600" fill="#6bb8f6"/>
+                                        <path id="map-land-path" d="M 0,0 L 800,0 L 800,320 C 720,290 680,240 620,230 C 560,220 540,260 480,280 C 440,300 400,380 390,460 C 370,520 300,560 220,540 C 180,530 140,490 120,440 C 90,380 40,360 0,330 Z" fill="#93dc72"/>
+                                        <path d="M 0,330 C 50,350 90,370 120,430 C 140,480 180,520 220,530 C 290,550 360,510 380,450 C 390,370 430,290 470,270 C 530,250 550,210 610,220 C 670,230 710,280 800,310 L 800,600 L 0,600 Z" fill="#5fa9ea" opacity="0.45"/>
+                                        <path id="map-elevation-path" d="M 160,80 C 240,60 380,90 460,110 C 530,130 620,180 600,240 C 580,300 520,320 450,350 C 380,380 340,460 270,480 C 210,490 180,450 170,410 C 160,370 210,330 230,280 C 250,230 200,190 170,160 C 150,130 140,90 160,80 Z" fill="#ffffff" opacity="0.88"/>
+                                    </svg>
+
+                                    <!-- Floating Weather City Cards on Map -->
+                                    <div class="map-floating-layer" id="map-floating-layer">
+                                        <!-- Dynamic marker pins rendered via JS -->
+                                    </div>
+                                </div>
+
+                                <!-- Zoom & Location Controls (Bottom Right) -->
+                                <div class="map-controls-bar">
+                                    <button class="map-ctrl-btn" id="map-zoom-in" title="Zoom In">+</button>
+                                    <button class="map-ctrl-btn" id="map-zoom-out" title="Zoom Out">−</button>
+                                    <button class="map-ctrl-btn" id="map-recenter" title="Recenter Location">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                            <path d="M12 2L2 22l10-4 10 4L12 2z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Right Map City List Column -->
+                        <div class="map-side-column">
+                            <div class="map-cities-list" id="map-cities-list">
+                                <!-- City cards in Map tab -->
+                            </div>
+                        </div>
+
+                    </main>
+
+                    <!-- ================= TAB 4: SETTINGS TAB (FULL WORKING SETTINGS) ================= -->
+                    <main class="settings-layout tab-pane" id="pane-settings">
+                        
+                        <!-- Left Column: Units, Notifications & General -->
+                        <div class="settings-main-column">
+                            
+                            <!-- Settings Search Bar -->
+                            <div class="search-wrapper">
+                                <div class="search-input-box">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        id="settings-search-input" 
+                                        class="search-input" 
+                                        placeholder="Search for cities"
+                                        autocomplete="off"
+                                    >
+                                    <button id="settings-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                </div>
+                                <div id="settings-search-spinner" class="search-spinner hidden"></div>
+                                <div id="settings-search-dropdown" class="search-dropdown hidden"></div>
+                            </div>
+
+                            <!-- Section 1: Units -->
+                            <div class="settings-group-section">
+                                <h3 class="settings-section-title">Units</h3>
+                                <div class="settings-card units-card">
+                                    
+                                    <!-- TEMPERATURE -->
+                                    <div class="unit-row">
+                                        <span class="unit-label">TEMPERATURE</span>
+                                        <div class="segmented-control" data-setting-group="tempUnit">
+                                            <button class="seg-btn active" data-unit="C">Celsius</button>
+                                            <button class="seg-btn" data-unit="F">Fahrenheit</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- WIND SPEED -->
+                                    <div class="unit-row">
+                                        <span class="unit-label">WIND SPEED</span>
+                                        <div class="segmented-control" data-setting-group="windUnit">
+                                            <button class="seg-btn active" data-unit="kmh">km/h</button>
+                                            <button class="seg-btn" data-unit="ms">m/s</button>
+                                            <button class="seg-btn" data-unit="knots">Knots</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- PRESSURE -->
+                                    <div class="unit-row">
+                                        <span class="unit-label">PRESSURE</span>
+                                        <div class="segmented-control" data-setting-group="pressureUnit">
+                                            <button class="seg-btn active" data-unit="hPa">hPa</button>
+                                            <button class="seg-btn" data-unit="inches">Inches</button>
+                                            <button class="seg-btn" data-unit="kPa">kPa</button>
+                                            <button class="seg-btn" data-unit="mm">mm</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- PRECIPITATION -->
+                                    <div class="unit-row">
+                                        <span class="unit-label">PRECIPITATION</span>
+                                        <div class="segmented-control" data-setting-group="precipUnit">
+                                            <button class="seg-btn active" data-unit="mm">Millimeters</button>
+                                            <button class="seg-btn" data-unit="inches">Inches</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- DISTANCE -->
+                                    <div class="unit-row">
+                                        <span class="unit-label">DISTANCE</span>
+                                        <div class="segmented-control" data-setting-group="distUnit">
+                                            <button class="seg-btn active" data-unit="km">Kilometers</button>
+                                            <button class="seg-btn" data-unit="miles">Miles</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Notifications -->
+                            <div class="settings-group-section">
+                                <h3 class="settings-section-title">Notifications</h3>
+                                <div class="settings-card toggle-card">
+                                    <div class="toggle-row">
+                                        <div class="toggle-info">
+                                            <span class="toggle-label">Notifications</span>
+                                            <p class="toggle-sub">Be aware of the weather</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="setting-notifications-toggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: General -->
+                            <div class="settings-group-section">
+                                <h3 class="settings-section-title">General</h3>
+                                <div class="settings-card toggle-card">
+                                    <div class="toggle-row border-bottom">
+                                        <div class="toggle-info">
+                                            <span class="toggle-label">12-Hour Time</span>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="setting-12h-toggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="toggle-row">
+                                        <div class="toggle-info">
+                                            <span class="toggle-label">Location</span>
+                                            <p class="toggle-sub">Get weather of your location</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="setting-location-toggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column: Advanced Premium Card -->
+                        <div class="settings-side-column">
+                            <div class="advanced-card">
+                                <h2 class="advanced-title">Advanced</h2>
+                                <div class="advanced-divider"></div>
+                                
+                                <h3 class="advanced-subtitle">Get new experience</h3>
+                                <ul class="advanced-features-list">
+                                    <li>• Ad free</li>
+                                    <li>• Health activities overview</li>
+                                    <li>• Severe weather notifications</li>
+                                </ul>
+
+                                <h4 class="advanced-hero-text">Never forget your umbrella!</h4>
+
+                                <div class="pricing-box">
+                                    <p class="pricing-desc">Sign up for our daily weather newsletter personalized just for you.</p>
+                                    <div class="price-tag">
+                                        <span class="price-amount">$5.99</span>
+                                        <span class="price-period">/month</span>
+                                    </div>
+                                </div>
+
+                                <button class="btn-signup-premium" id="btn-signup-premium">Sign up</button>
+                            </div>
+                        </div>
+
+                    </main>
+
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Toast Notification Popup -->
+    <div id="app-toast" class="app-toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

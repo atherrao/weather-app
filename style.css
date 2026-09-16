@@ -1,0 +1,1793 @@
+/* =========================================================
+   BREEZE WEATHER APP - COMPLETE DESIGN SYSTEM & STYLESHEET
+   ========================================================= */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+:root {
+    --bg-page: #f2f4f7;
+    --card-bg: #eaeff5;
+    --card-bg-elevated: #f0f4f8;
+    --card-hover: #e3e8f0;
+    --card-border: rgba(0, 0, 0, 0.02);
+    
+    --text-primary: #1e2838;
+    --text-secondary: #8c97a8;
+    --text-muted: #a0aec0;
+
+    --brand-blue: #0084ff;
+    --brand-blue-hover: #0073e6;
+    --brand-blue-subtle: #e5f2ff;
+    --brand-blue-shadow: rgba(0, 132, 255, 0.25);
+
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-full: 9999px;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+/* App Canvas Wrapper */
+.app-canvas {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-page);
+}
+
+/* View Screens (Welcome vs Dashboard) */
+.view-screen {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.view-screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   1. WELCOME / ONBOARDING SCREEN
+   ========================================================= */
+
+.onboarding-container {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    min-height: 620px;
+    padding: 2rem;
+}
+
+.card-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.card-inner {
+    width: 100%;
+    max-width: 440px;
+    height: 560px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-xl);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-inner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 50px -15px rgba(0, 0, 0, 0.08);
+}
+
+.floating-umbrella {
+    width: 78%;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    animation: gentleFloat 4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 25px 25px rgba(25, 45, 80, 0.08));
+    user-select: none;
+}
+
+@keyframes gentleFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+    100% { transform: translateY(-4px) rotate(-0.5deg); }
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.mini-logo {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.mini-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.brand-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.brand-subtitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.btn-primary {
+    appearance: none;
+    border: none;
+    background: var(--brand-blue);
+    color: #ffffff;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.85rem 2.5rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 0 8px 22px var(--brand-blue-shadow);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    background: var(--brand-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 132, 255, 0.4);
+}
+
+/* =========================================================
+   2. MAIN APP SHELL & SIDEBAR NAVIGATION
+   ========================================================= */
+
+.dashboard-shell {
+    width: 100%;
+    max-width: 1320px;
+    min-height: 820px;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 1.5rem;
+}
+
+.sidebar-nav {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-logo .logo-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.sidebar-logo .logo-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 72px;
+    padding: 0.6rem 0.2rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: var(--font-family);
+    font-size: 0.72rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.nav-item .nav-icon {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    transition: stroke 0.2s, transform 0.2s;
+}
+
+.nav-item:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.nav-item.active {
+    color: var(--text-primary);
+}
+
+.nav-item.active .nav-icon {
+    stroke: var(--text-primary);
+    stroke-width: 2.2;
+}
+
+/* Content Container & Tab Panes */
+.content-container {
+    width: 100%;
+    position: relative;
+}
+
+.tab-pane {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tab-pane.active {
+    display: grid;
+}
+
+/* =========================================================
+   3. TAB 1: WEATHER DASHBOARD VIEW
+   ========================================================= */
+
+.dashboard-body {
+    grid-template-columns: 1.55fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+.main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Search Bar Component */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 0 0.5rem 0 1rem;
+    transition: all 0.25s ease;
+}
+
+.search-input-box:focus-within {
+    background-color: #ffffff;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+}
+
+.search-icon {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-secondary);
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.search-input {
+    width: 100%;
+    height: 48px;
+    background: transparent;
+    border: none;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-submit-btn {
+    appearance: none;
+    border: none;
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    font-family: var(--font-family);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+.search-submit-btn:hover {
+    background-color: var(--brand-blue-hover);
+    transform: translateY(-1px);
+}
+
+.search-spinner {
+    position: absolute;
+    right: 80px;
+    top: 14px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--card-bg);
+    border-top-color: var(--brand-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.search-spinner.hidden { display: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.search-dropdown {
+    position: absolute;
+    top: 54px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 99;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.search-dropdown.hidden { display: none; }
+
+.search-dropdown-item {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    transition: background 0.15s ease;
+}
+
+.search-dropdown-item:hover {
+    background-color: var(--card-bg);
+    color: var(--brand-blue);
+}
+
+/* Current Weather Hero Banner */
+.current-weather-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+}
+
+.hero-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.city-name {
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.live-badge {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+}
+
+.time-and-rain {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem;
+}
+
+.city-live-clock, .detail-live-clock {
+    color: var(--brand-blue);
+    font-weight: 700;
+}
+
+.time-dot {
+    color: var(--text-muted);
+}
+
+.temperature-display {
+    font-size: 3.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.hero-graphic {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-weather-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 15px 25px rgba(240, 180, 0, 0.2));
+    animation: gentlePulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes gentlePulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* Weather Sub-views (Compact vs Expanded Air Conditions) */
+.weather-sub-view {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.weather-sub-view.active {
+    display: flex;
+}
+
+/* Universal Card Widgets */
+.card-widget {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.widget-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.hourly-hint {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Hourly Forecast Card */
+.hourly-forecast-card .hourly-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.hourly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+.hourly-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -0.25rem;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.hour-time {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.hour-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hour-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.hour-temp {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Air Conditions Card (Compact Mode) */
+.btn-see-more {
+    appearance: none;
+    border: none;
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.95rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 0 4px 10px var(--brand-blue-shadow);
+    transition: all 0.2s ease;
+}
+
+.btn-see-more:hover {
+    background-color: var(--brand-blue-hover);
+    transform: translateY(-1px);
+}
+
+.conditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.5rem;
+    column-gap: 2.5rem;
+}
+
+.condition-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.condition-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.condition-icon {
+    width: 17px;
+    height: 17px;
+    stroke: var(--text-secondary);
+}
+
+.condition-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.condition-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    padding-left: 1.55rem;
+}
+
+/* =========================================================
+   EXPANDED 8-CARD AIR CONDITIONS GRID
+   ========================================================= */
+
+.expanded-conditions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.expanded-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.btn-see-less {
+    background-color: #64748b;
+    box-shadow: none;
+}
+
+.btn-see-less:hover {
+    background-color: #475569;
+}
+
+.expanded-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.detail-metric-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.detail-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.metric-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.metric-icon {
+    width: 16px;
+    height: 16px;
+    stroke: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.metric-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+/* Side Column widgets */
+.side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.expanded-side-widget {
+    display: none;
+}
+
+.side-hourly-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.side-hourly-grid .hourly-item:not(:last-child)::after {
+    right: -0.25rem;
+}
+
+/* 7-Day Forecast Card */
+.weekly-forecast-card {
+    height: 100%;
+    padding: 1.75rem;
+}
+
+.weekly-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.weekly-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.weekly-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0.25rem;
+}
+
+.weekly-row:first-child {
+    padding-top: 0.25rem;
+}
+
+.day-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 55px;
+}
+
+.day-weather-info {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1;
+    padding-left: 1rem;
+}
+
+.day-icon {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.day-condition {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.day-temps {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.day-temps .temp-low {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* =========================================================
+   4. TAB 2: CITIES TAB (GLOBAL COUNTRIES & FILTER CHIPS)
+   ========================================================= */
+
+.cities-layout {
+    grid-template-columns: 1.4fr 1.05fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.cities-list-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Country Filter Chip Bar */
+.country-filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.25rem 0.1rem;
+    scrollbar-width: none;
+}
+
+.country-filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-chip {
+    appearance: none;
+    border: none;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.45rem 1.05rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.filter-chip:hover {
+    background-color: #dbe2ec;
+    transform: translateY(-1px);
+}
+
+.filter-chip.active {
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 132, 255, 0.35);
+}
+
+.cities-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 680px;
+    overflow-y: auto;
+    padding-right: 0.35rem;
+}
+
+.cities-cards-container::-webkit-scrollbar,
+.map-cities-list::-webkit-scrollbar {
+    width: 5px;
+}
+.cities-cards-container::-webkit-scrollbar-thumb,
+.map-cities-list::-webkit-scrollbar-thumb {
+    background: #d8e0eb;
+    border-radius: 4px;
+}
+
+/* City Item Card */
+.city-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.city-card:hover {
+    background-color: var(--card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+}
+
+.city-card.active {
+    border-color: var(--brand-blue);
+    background-color: var(--card-bg);
+    box-shadow: 0 8px 24px rgba(0, 132, 255, 0.12);
+}
+
+.city-card-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.city-card-icon-wrap {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.city-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.city-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.city-card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.city-card-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.city-nav-arrow {
+    width: 14px;
+    height: 14px;
+    fill: var(--text-primary);
+    display: none;
+}
+
+.city-card.active .city-nav-arrow {
+    display: inline-block;
+}
+
+.city-card-time {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.city-card-temp {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+/* Right Detail Column */
+.city-detail-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-detail-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.city-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+}
+
+.city-detail-title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-city-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.detail-temp {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.detail-graphic {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 15px 25px rgba(240, 180, 0, 0.2));
+}
+
+.detail-divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.08);
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.detail-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+/* Detail Hourly (3 slots) */
+.detail-hourly-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.detail-hourly-grid .hourly-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -0.25rem;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Detail 7-Day List */
+.detail-3day-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.detail-3day-list .weekly-row {
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.detail-3day-list .weekly-row:last-child {
+    border-bottom: none;
+}
+
+/* =========================================================
+   5. TAB 3: MAP VIEW (GLOBAL WEATHER MAP & REGION PILLS)
+   ========================================================= */
+
+.map-layout {
+    grid-template-columns: 1.55fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+}
+
+.map-main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Region Selector Pills */
+.map-region-bar {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.1rem 0;
+    scrollbar-width: none;
+}
+
+.map-region-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.region-pill {
+    appearance: none;
+    border: none;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.4rem 0.95rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.region-pill:hover {
+    background-color: #dbe2ec;
+    transform: translateY(-1px);
+}
+
+.region-pill.active {
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 132, 255, 0.35);
+}
+
+.interactive-map-card {
+    position: relative;
+    width: 100%;
+    height: 540px;
+    background-color: #6bb8f6;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+/* Done Button on Map */
+.map-btn-done {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    font-family: var(--font-family);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.45rem 1.45rem;
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 132, 255, 0.35);
+    z-index: 30;
+    transition: all 0.2s ease;
+}
+
+.map-btn-done:hover {
+    background-color: var(--brand-blue-hover);
+    transform: translateY(-2px);
+}
+
+/* Map Viewport & SVG Canvas */
+.map-terrain-viewport {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: center center;
+}
+
+.map-terrain-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Floating Badges on Map */
+.map-floating-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.map-marker-pin {
+    position: absolute;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.2s;
+    z-index: 10;
+}
+
+.map-marker-pin:hover {
+    z-index: 25;
+}
+
+.pin-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #1e2838;
+    border: 2.5px solid #ffffff;
+    border-radius: 50%;
+    margin: 0 auto 5px auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.map-weather-badge {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 0.85rem 1.1rem;
+    min-width: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    border: 2px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.map-weather-badge:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+}
+
+.map-weather-badge.active {
+    background: #ffffff;
+    border-color: var(--brand-blue);
+    box-shadow: 0 20px 40px rgba(0, 132, 255, 0.25);
+    transform: scale(1.06);
+}
+
+.badge-city-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.badge-icon-wrap {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.1rem 0;
+}
+
+.badge-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.badge-temp {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.badge-detail-btn {
+    display: none;
+    appearance: none;
+    border: none;
+    background-color: #eaeff5;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-full);
+    margin-top: 0.35rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.map-weather-badge.active .badge-detail-btn,
+.map-weather-badge:hover .badge-detail-btn {
+    display: block;
+}
+
+.badge-detail-btn:hover {
+    background-color: var(--brand-blue);
+    color: #ffffff;
+}
+
+/* Map Zoom & Action Controls (Bottom Right) */
+.map-controls-bar {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 30;
+}
+
+.map-ctrl-btn {
+    width: 38px;
+    height: 38px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 1.25rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease;
+}
+
+.map-ctrl-btn:hover {
+    background-color: var(--card-bg);
+    transform: scale(1.06);
+}
+
+.map-ctrl-btn:active {
+    transform: scale(0.95);
+}
+
+/* Right Column (City list inside Map tab) */
+.map-side-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-cities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 620px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+/* =========================================================
+   6. TAB 4: SETTINGS VIEW & CONTROLS
+   ========================================================= */
+
+.settings-layout {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.settings-main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.settings-group-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.settings-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.settings-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem 1.6rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* Units Segmented Buttons */
+.units-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.unit-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.unit-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.segmented-control {
+    display: flex;
+    background-color: #dbe2ea;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.seg-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.65rem 0.75rem;
+    border-radius: 9px;
+    font-family: var(--font-family);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: center;
+    user-select: none;
+}
+
+.seg-btn:hover:not(.active) {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+.seg-btn.active {
+    background-color: #ffffff;
+    color: var(--text-primary);
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* Toggle Switch Cards */
+.toggle-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+}
+
+.toggle-row.border-bottom {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 1rem;
+    margin-bottom: 0.85rem;
+}
+
+.toggle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.toggle-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.toggle-sub {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* iOS-style Modern Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+    background-color: var(--brand-blue);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Right Column: Advanced Premium Card */
+.settings-side-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.advanced-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.advanced-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.advanced-divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.08);
+    width: 100%;
+}
+
+.advanced-subtitle {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.advanced-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.advanced-features-list li {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.advanced-hero-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0.25rem 0 0 0;
+}
+
+.pricing-box {
+    background-color: #dbe2ea;
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.pricing-desc {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #475569;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+}
+
+.price-amount {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.price-period {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.btn-signup-premium {
+    appearance: none;
+    border: none;
+    background-color: var(--brand-blue);
+    color: #ffffff;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.9rem 1.5rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--brand-blue-shadow);
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-signup-premium:hover {
+    background-color: var(--brand-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 150, 242, 0.45);
+}
+
+.btn-signup-premium:active {
+    transform: translateY(0);
+}
+
+/* App Toast Notification */
+.app-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 1rem 1.6rem;
+    border-radius: 12px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 0.92rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    z-index: 99999;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.app-toast.hidden {
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1120px) {
+    .dashboard-shell {
+        grid-template-columns: 80px 1fr;
+        padding: 1rem;
+    }
+
+    .dashboard-body,
+    .cities-layout,
+    .map-layout,
+    .settings-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .interactive-map-card {
+        height: 480px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-shell {
+        grid-template-columns: 1fr;
+        margin: 0;
+        padding: 0.75rem;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.75rem 1.25rem;
+        gap: 1rem;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        justify-content: space-around;
+        width: auto;
+        gap: 0.5rem;
+    }
+
+    .nav-item {
+        width: auto;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .hourly-forecast-card .hourly-list {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    .hourly-item {
+        min-width: 65px;
+    }
+
+    .expanded-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .interactive-map-card {
+        height: 380px;
+    }
+
+    .onboarding-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        min-height: auto;
+    }
+}
