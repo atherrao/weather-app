@@ -154,12 +154,16 @@ body {
 }
 
 .mini-logo {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
+    background-color: var(--card-bg);
+    border-radius: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 1.5rem;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     transition: transform 0.3s ease;
 }
 
