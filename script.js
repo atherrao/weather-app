@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedSettings) {
             appSettings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(savedSettings));
         }
-        
+
         const savedProState = localStorage.getItem('breeze_is_pro');
         if (savedProState) {
             isProUser = (savedProState === 'true');
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn('Could not save settings to storage', e);
         }
     }
-    
+
     function saveProState(status) {
         isProUser = status;
         try {
@@ -336,16 +336,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentHour = now.getHours();
         const hourlySlots = [];
         const offsets = [0, 3, 6, 9, 12, 15];
-        
+
         offsets.forEach(offset => {
             const hDate = new Date();
             hDate.setHours(currentHour + offset, 0, 0, 0);
-            const timeLabel = hDate.toLocaleTimeString([], { 
-                hour: 'numeric', 
-                minute: '2-digit', 
-                hour12: appSettings.is12Hour 
+            const timeLabel = hDate.toLocaleTimeString([], {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: appSettings.is12Hour
             });
-            
+
             const h = hDate.getHours();
             let tempOffset = 0;
             let icon = baseIcon;
@@ -666,8 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Apply search filter
         if (filterQuery) {
-            filtered = filtered.filter(c => 
-                c.name.toLowerCase().includes(filterQuery.toLowerCase()) || 
+            filtered = filtered.filter(c =>
+                c.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
                 c.country.toLowerCase().includes(filterQuery.toLowerCase())
             );
         }
@@ -676,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
             citiesCardsList.innerHTML = `<div style="padding: 2.5rem; text-align: center; color: var(--text-secondary);">No cities found for this search.</div>`;
             return;
         }
-        
+
         let displayList = filtered;
         if (!isProUser) {
             // Free Tier: restrict to first 3 matches
@@ -707,7 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }).join('');
-        
+
         // Append PRO Banner if not pro
         if (!isProUser) {
             htmlStr += `
@@ -738,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCitiesList(filterQuery);
             });
         });
-        
+
         // Attach upgrade button listener if exists
         const btnCitiesUpgrade = document.getElementById('btn-cities-upgrade-pro');
         if (btnCitiesUpgrade) {
@@ -878,7 +878,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 activateTab('weather');
             });
         });
-        
+
         if (mapLockOverlay) {
             if (isProUser) {
                 mapLockOverlay.classList.add('unlocked');
@@ -990,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     body: '✅ Weather notifications enabled! You will receive daily alerts.',
                                     icon: 'assets/sun.png'
                                 });
-                            } catch (err) {}
+                            } catch (err) { }
                         }
                     });
                 }
@@ -1244,8 +1244,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const localMatches = worldCities.filter(c => 
-                c.name.toLowerCase().includes(query.toLowerCase()) || 
+            const localMatches = worldCities.filter(c =>
+                c.name.toLowerCase().includes(query.toLowerCase()) ||
                 c.country.toLowerCase().includes(query.toLowerCase())
             ).slice(0, 6);
 
@@ -1299,7 +1299,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 });
                             });
                         }
-                    } catch (err) {}
+                    } catch (err) { }
                 }
             }, 350);
         });
@@ -1340,14 +1340,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start Live Clocks
     startLiveClocks();
-    
+
     // ==========================================
     // 5. SUBSCRIPTION & MODAL LOGIC
     // ==========================================
     function openSubscriptionModal() {
         if (subscriptionModal) subscriptionModal.classList.remove('hidden');
     }
-    
+
     function closeSubscriptionModal() {
         if (subscriptionModal) subscriptionModal.classList.add('hidden');
     }
@@ -1355,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', closeSubscriptionModal);
     }
-    
+
     if (subscriptionModal) {
         subscriptionModal.addEventListener('click', (e) => {
             if (e.target === subscriptionModal) closeSubscriptionModal();
@@ -1394,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (subscriptionForm) {
         subscriptionForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             // Simulate processing
             const originalText = btnCheckoutText.textContent;
             btnCheckoutText.textContent = 'Processing Securely...';
@@ -1405,13 +1405,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnCheckoutText.textContent = originalText;
                 btnCheckoutSubmit.style.opacity = '1';
                 btnCheckoutSubmit.style.pointerEvents = 'auto';
-                
+
                 // Activate Pro
                 saveProState(true);
-                
+
                 // Sync settings toggle if it exists
                 if (testProModeToggle) testProModeToggle.checked = true;
-                
+
                 closeSubscriptionModal();
                 showToast('🎉 <strong>Welcome to Breeze PRO!</strong> All features are now unlocked.', 4500);
             }, 1200);
@@ -1422,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (testProModeToggle) {
         testProModeToggle.checked = isProUser;
         const statusBadge = document.getElementById('settings-pro-badge');
-        
+
         function updateStatusBadge() {
             if (!statusBadge) return;
             if (isProUser) {
@@ -1435,10 +1435,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusBadge.classList.add('free');
             }
         }
-        
+
         // Initial setup
         updateStatusBadge();
-        
+
         testProModeToggle.addEventListener('change', (e) => {
             saveProState(e.target.checked);
             updateStatusBadge();
