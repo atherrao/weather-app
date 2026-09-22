@@ -94,6 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingLocationToggle = document.getElementById('setting-location-toggle');
     const btnSignupPremium = document.getElementById('btn-signup-premium');
 
+    // Subscription Modal & Pro Elements
+    const subscriptionModal = document.getElementById('subscription-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const btnUnlockMapPro = document.getElementById('btn-unlock-map-pro');
+    const mapLockOverlay = document.getElementById('map-lock-overlay');
+    const planCards = document.querySelectorAll('.plan-card');
+    const subscriptionForm = document.getElementById('subscription-form');
+    const btnCheckoutSubmit = document.getElementById('btn-checkout-submit');
+    const btnCheckoutText = document.getElementById('btn-checkout-text');
+    const testProModeToggle = document.getElementById('test-pro-mode-toggle');
+
     // ==========================================
     // 1. SETTINGS STATE & PERSISTENCE
     // ==========================================
@@ -109,11 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let appSettings = Object.assign({}, DEFAULT_SETTINGS);
+    let isProUser = false; // Free tier by default
 
     try {
         const savedSettings = localStorage.getItem('breeze_weather_settings');
         if (savedSettings) {
             appSettings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(savedSettings));
+        }
+        
+        const savedProState = localStorage.getItem('breeze_is_pro');
+        if (savedProState) {
+            isProUser = (savedProState === 'true');
         }
     } catch (e) {
         console.warn('Could not read settings from storage', e);
@@ -125,6 +142,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.warn('Could not save settings to storage', e);
         }
+    }
+    
+    function saveProState(status) {
+        isProUser = status;
+        try {
+            localStorage.setItem('breeze_is_pro', status ? 'true' : 'false');
+        } catch (e) {
+            console.warn('Could not save pro state to storage', e);
+        }
+        rerenderAllViews(); // Re-render to reflect unlocked/locked state
     }
 
     // Toast Notification System
@@ -513,9 +540,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Country Filter Chips (Cities Tab)
     countryFilterChips.forEach(chip => {
         chip.addEventListener('click', () => {
+            const selectedCountry = chip.dataset.country;
+            if (!isProUser && selectedCountry !== 'all') {
+                showToast('🔒 Country filters are a Breeze PRO feature');
+                openSubscriptionModal();
+                return;
+            }
             countryFilterChips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
-            activeCountryFilter = chip.dataset.country;
+            activeCountryFilter = selectedCountry;
             renderCitiesList();
         });
     });
@@ -643,8 +676,14 @@ document.addEventListener('DOMContentLoaded', () => {
             citiesCardsList.innerHTML = `<div style="padding: 2.5rem; text-align: center; color: var(--text-secondary);">No cities found for this search.</div>`;
             return;
         }
+        
+        let displayList = filtered;
+        if (!isProUser) {
+            // Free Tier: restrict to first 3 matches
+            displayList = filtered.slice(0, 3);
+        }
 
-        citiesCardsList.innerHTML = filtered.map((city) => {
+        let htmlStr = displayList.map((city) => {
             const actualIndex = worldCities.indexOf(city);
             const isActive = actualIndex === selectedCityIndex;
             return `
@@ -668,6 +707,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }).join('');
+        
+        // Append PRO Banner if not pro
+        if (!isProUser) {
+            htmlStr += `
+                <div class="cities-pro-upgrade-card">
+                    <div class="cities-pro-card-header">
+                        <span style="font-size: 1.5rem;">👑</span>
+                        <h4 class="cities-pro-card-title">Unlock 50+ Global Cities</h4>
+                    </div>
+                    <p class="cities-pro-card-desc">Get Breeze PRO to explore live weather and local time for all cities worldwide.</p>
+                    
+                    <div class="cities-pro-locked-preview">
+                        <span class="locked-city-chip">🔒 Tokyo, JP</span>
+                        <span class="locked-city-chip">🔒 London, UK</span>
+                        <span class="locked-city-chip">🔒 New York, US</span>
+                    </div>
+                    
+                    <button class="btn-cities-upgrade-pro" id="btn-cities-upgrade-pro">Upgrade to PRO</button>
+                </div>
+            `;
+        }
+
+        citiesCardsList.innerHTML = htmlStr;
 
         document.querySelectorAll('.city-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -676,6 +738,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCitiesList(filterQuery);
             });
         });
+        
+        // Attach upgrade button listener if exists
+        const btnCitiesUpgrade = document.getElementById('btn-cities-upgrade-pro');
+        if (btnCitiesUpgrade) {
+            btnCitiesUpgrade.addEventListener('click', () => openSubscriptionModal());
+        }
     }
 
     // Render Cities Tab Detail Panel
@@ -810,6 +878,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 activateTab('weather');
             });
         });
+        
+        if (mapLockOverlay) {
+            if (isProUser) {
+                mapLockOverlay.classList.add('unlocked');
+            } else {
+                mapLockOverlay.classList.remove('unlocked');
+            }
+        }
     }
 
     // Select City helper
@@ -828,6 +904,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCitiesList();
         renderCityDetail(worldCities[selectedCityIndex]);
         renderMapTab();
+
+        // Show/hide the PRO lock badge on the Map nav icon
+        const mapProBadge = document.getElementById('nav-map-pro-badge');
+        if (mapProBadge) {
+            mapProBadge.style.display = isProUser ? 'none' : 'flex';
+        }
     }
 
     // ==========================================
@@ -1258,6 +1340,115 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start Live Clocks
     startLiveClocks();
+    
+    // ==========================================
+    // 5. SUBSCRIPTION & MODAL LOGIC
+    // ==========================================
+    function openSubscriptionModal() {
+        if (subscriptionModal) subscriptionModal.classList.remove('hidden');
+    }
+    
+    function closeSubscriptionModal() {
+        if (subscriptionModal) subscriptionModal.classList.add('hidden');
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeSubscriptionModal);
+    }
+    
+    if (subscriptionModal) {
+        subscriptionModal.addEventListener('click', (e) => {
+            if (e.target === subscriptionModal) closeSubscriptionModal();
+        });
+    }
+
+    if (btnUnlockMapPro) btnUnlockMapPro.addEventListener('click', openSubscriptionModal);
+    if (btnSignupPremium) {
+        btnSignupPremium.addEventListener('click', () => {
+            if (isProUser) {
+                showToast('🎉 You are already a Breeze PRO member!');
+            } else {
+                openSubscriptionModal();
+            }
+        });
+    }
+
+    // Plan Selection Logic
+    let selectedPlanPrice = '$5.99/mo';
+    planCards.forEach(card => {
+        card.addEventListener('click', () => {
+            planCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            if (card.id === 'plan-monthly') {
+                selectedPlanPrice = '$5.99/mo';
+            } else {
+                selectedPlanPrice = '$49.99/yr';
+            }
+            if (btnCheckoutText) {
+                btnCheckoutText.textContent = `Start 7-Day Free Trial & Unlock (${selectedPlanPrice})`;
+            }
+        });
+    });
+
+    // Form Submission (Simulate Checkout)
+    if (subscriptionForm) {
+        subscriptionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulate processing
+            const originalText = btnCheckoutText.textContent;
+            btnCheckoutText.textContent = 'Processing Securely...';
+            btnCheckoutSubmit.style.opacity = '0.8';
+            btnCheckoutSubmit.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                btnCheckoutText.textContent = originalText;
+                btnCheckoutSubmit.style.opacity = '1';
+                btnCheckoutSubmit.style.pointerEvents = 'auto';
+                
+                // Activate Pro
+                saveProState(true);
+                
+                // Sync settings toggle if it exists
+                if (testProModeToggle) testProModeToggle.checked = true;
+                
+                closeSubscriptionModal();
+                showToast('🎉 <strong>Welcome to Breeze PRO!</strong> All features are now unlocked.', 4500);
+            }, 1200);
+        });
+    }
+
+    // Settings Pro Mode Switch (For easy testing)
+    if (testProModeToggle) {
+        testProModeToggle.checked = isProUser;
+        const statusBadge = document.getElementById('settings-pro-badge');
+        
+        function updateStatusBadge() {
+            if (!statusBadge) return;
+            if (isProUser) {
+                statusBadge.textContent = 'PRO ACTIVE';
+                statusBadge.classList.remove('free');
+                statusBadge.classList.add('active');
+            } else {
+                statusBadge.textContent = 'FREE TIER';
+                statusBadge.classList.remove('active');
+                statusBadge.classList.add('free');
+            }
+        }
+        
+        // Initial setup
+        updateStatusBadge();
+        
+        testProModeToggle.addEventListener('change', (e) => {
+            saveProState(e.target.checked);
+            updateStatusBadge();
+            if (isProUser) {
+                showToast('🧪 Pro Mode Activated (Demo)');
+            } else {
+                showToast('🧪 Free Mode Activated (Demo)');
+            }
+        });
+    }
 
     // Initial Sync & Render
     syncSettingsUI();

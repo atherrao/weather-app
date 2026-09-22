@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Breeze - Global World Weather App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-canvas">
-        
+
         <!-- ================= 1. ONBOARDING / WELCOME VIEW ================= -->
         <section id="welcome-view" class="view-screen active">
             <main class="onboarding-container">
@@ -44,7 +47,7 @@
         <!-- ================= 2. MAIN APP SHELL (SIDEBAR + TABS) ================= -->
         <section id="dashboard-view" class="view-screen">
             <div class="dashboard-shell">
-                
+
                 <!-- Left Navigation Sidebar -->
                 <aside class="sidebar-nav">
                     <div class="sidebar-logo">
@@ -55,47 +58,54 @@
 
                     <nav class="nav-menu">
                         <button class="nav-item active" data-tab="weather" id="tab-btn-weather" title="Weather">
-                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
-                                <path d="M8 19v2"/>
-                                <path d="M12 19v2"/>
-                                <path d="M16 19v2"/>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                                <path d="M8 19v2" />
+                                <path d="M12 19v2" />
+                                <path d="M16 19v2" />
                             </svg>
                             <span>Weather</span>
                         </button>
 
                         <button class="nav-item" data-tab="cities" id="tab-btn-cities" title="Countries & Cities">
-                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="8" y1="6" x2="21" y2="6"/>
-                                <line x1="8" y1="12" x2="21" y2="12"/>
-                                <line x1="8" y1="18" x2="21" y2="18"/>
-                                <line x1="3" y1="6" x2="3.01" y2="6"/>
-                                <line x1="3" y1="12" x2="3.01" y2="12"/>
-                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6" />
+                                <line x1="8" y1="12" x2="21" y2="12" />
+                                <line x1="8" y1="18" x2="21" y2="18" />
+                                <line x1="3" y1="6" x2="3.01" y2="6" />
+                                <line x1="3" y1="12" x2="3.01" y2="12" />
+                                <line x1="3" y1="18" x2="3.01" y2="18" />
                             </svg>
                             <span>Cities</span>
                         </button>
 
-                        <button class="nav-item" data-tab="map" id="tab-btn-map" title="Global Map">
-                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
-                                <line x1="9" y1="3" x2="9" y2="18"/>
-                                <line x1="15" y1="6" x2="15" y2="21"/>
-                            </svg>
-                            <span>Map <span class="nav-pro-badge" id="nav-map-pro-badge">PRO</span></span>
+                        <button class="nav-item" data-tab="map" id="tab-btn-map" title="Global Map — PRO Feature">
+                            <div class="nav-icon-wrapper">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
+                                    <line x1="9" y1="3" x2="9" y2="18" />
+                                    <line x1="15" y1="6" x2="15" y2="21" />
+                                </svg>
+                                <span class="nav-pro-badge" id="nav-map-pro-badge">🔒</span>
+                            </div>
+                            <span>Map</span>
                         </button>
 
                         <button class="nav-item" data-tab="settings" id="tab-btn-settings" title="Settings">
-                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="4" y1="21" x2="4" y2="14"/>
-                                <line x1="4" y1="10" x2="4" y2="3"/>
-                                <line x1="12" y1="21" x2="12" y2="12"/>
-                                <line x1="12" y1="8" x2="12" y2="3"/>
-                                <line x1="20" y1="21" x2="20" y2="16"/>
-                                <line x1="20" y1="12" x2="20" y2="3"/>
-                                <line x1="1" y1="14" x2="7" y2="14"/>
-                                <line x1="9" y1="8" x2="15" y2="8"/>
-                                <line x1="17" y1="16" x2="23" y2="16"/>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="21" x2="4" y2="14" />
+                                <line x1="4" y1="10" x2="4" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12" y2="3" />
+                                <line x1="20" y1="21" x2="20" y2="16" />
+                                <line x1="20" y1="12" x2="20" y2="3" />
+                                <line x1="1" y1="14" x2="7" y2="14" />
+                                <line x1="9" y1="8" x2="15" y2="8" />
+                                <line x1="17" y1="16" x2="23" y2="16" />
                             </svg>
                             <span>Settings</span>
                         </button>
@@ -117,22 +127,19 @@
                     <main class="dashboard-body tab-pane active" id="pane-weather">
                         <!-- Middle Column -->
                         <div class="main-column">
-                            
+
                             <!-- Search Bar -->
                             <div class="search-wrapper">
                                 <div class="search-input-box">
-                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     </svg>
-                                    <input 
-                                        type="text" 
-                                        id="city-search-input" 
-                                        class="search-input" 
-                                        placeholder="Search any city or country worldwide..."
-                                        autocomplete="off"
-                                    >
-                                    <button id="city-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                    <input type="text" id="city-search-input" class="search-input"
+                                        placeholder="Search any city or country worldwide..." autocomplete="off">
+                                    <button id="city-search-btn" class="search-submit-btn"
+                                        title="Search City">Search</button>
                                 </div>
                                 <div id="search-spinner" class="search-spinner hidden"></div>
                                 <div id="search-dropdown" class="search-dropdown hidden"></div>
@@ -153,7 +160,8 @@
                                     <div class="temperature-display" id="current-temp">31°</div>
                                 </div>
                                 <div class="hero-graphic">
-                                    <img src="assets/sun.png" alt="Current Weather" id="current-weather-icon" class="main-weather-img">
+                                    <img src="assets/sun.png" alt="Current Weather" id="current-weather-icon"
+                                        class="main-weather-img">
                                 </div>
                             </div>
 
@@ -176,13 +184,16 @@
                                         <h3 class="widget-title">AIR CONDITIONS</h3>
                                         <button class="btn-see-more" id="see-more-btn">See more</button>
                                     </div>
-                                    
+
                                     <div class="conditions-grid">
                                         <!-- Real Feel -->
                                         <div class="condition-item">
                                             <div class="condition-header">
-                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path
+                                                        d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
                                                 </svg>
                                                 <span class="condition-label">Real Feel</span>
                                             </div>
@@ -192,10 +203,12 @@
                                         <!-- Wind -->
                                         <div class="condition-item">
                                             <div class="condition-header">
-                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
-                                                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
-                                                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                                                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                                                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
                                                 </svg>
                                                 <span class="condition-label">Wind</span>
                                             </div>
@@ -205,8 +218,10 @@
                                         <!-- Chance of rain -->
                                         <div class="condition-item">
                                             <div class="condition-header">
-                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
                                                 </svg>
                                                 <span class="condition-label">Chance of rain</span>
                                             </div>
@@ -216,16 +231,18 @@
                                         <!-- UV Index -->
                                         <div class="condition-item">
                                             <div class="condition-header">
-                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <circle cx="12" cy="12" r="4"/>
-                                                    <path d="M12 2v2"/>
-                                                    <path d="M12 20v2"/>
-                                                    <path d="m4.93 4.93 1.41 1.41"/>
-                                                    <path d="m17.66 17.66 1.41 1.41"/>
-                                                    <path d="M2 12h2"/>
-                                                    <path d="M20 12h2"/>
-                                                    <path d="m6.34 17.66-1.41 1.41"/>
-                                                    <path d="m19.07 4.93-1.41 1.41"/>
+                                                <svg class="condition-icon" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="4" />
+                                                    <path d="M12 2v2" />
+                                                    <path d="M12 20v2" />
+                                                    <path d="m4.93 4.93 1.41 1.41" />
+                                                    <path d="m17.66 17.66 1.41 1.41" />
+                                                    <path d="M2 12h2" />
+                                                    <path d="M20 12h2" />
+                                                    <path d="m6.34 17.66-1.41 1.41" />
+                                                    <path d="m19.07 4.93-1.41 1.41" />
                                                 </svg>
                                                 <span class="condition-label">UV Index</span>
                                             </div>
@@ -245,7 +262,18 @@
                                     <!-- 1. UV INDEX -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="4" />
+                                                <path d="M12 2v2" />
+                                                <path d="M12 20v2" />
+                                                <path d="m4.93 4.93 1.41 1.41" />
+                                                <path d="m17.66 17.66 1.41 1.41" />
+                                                <path d="M2 12h2" />
+                                                <path d="M20 12h2" />
+                                                <path d="m6.34 17.66-1.41 1.41" />
+                                                <path d="m19.07 4.93-1.41 1.41" />
+                                            </svg>
                                             <span class="metric-name">UV INDEX</span>
                                         </div>
                                         <div class="metric-value" id="exp-uv-val">3</div>
@@ -254,7 +282,12 @@
                                     <!-- 2. WIND -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                                                <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                                                <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+                                            </svg>
                                             <span class="metric-name">WIND</span>
                                         </div>
                                         <div class="metric-value" id="exp-wind-val">0.2 km/h</div>
@@ -263,7 +296,11 @@
                                     <!-- 3. HUMIDITY -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
+                                            </svg>
                                             <span class="metric-name">HUMIDITY</span>
                                         </div>
                                         <div class="metric-value" id="exp-humidity-val">56%</div>
@@ -272,7 +309,11 @@
                                     <!-- 4. VISIBILITY -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
                                             <span class="metric-name">VISIBILITY</span>
                                         </div>
                                         <div class="metric-value" id="exp-visibility-val">12 km</div>
@@ -281,7 +322,10 @@
                                     <!-- 5. FEELS LIKE -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+                                            </svg>
                                             <span class="metric-name">FEELS LIKE</span>
                                         </div>
                                         <div class="metric-value" id="exp-feels-val">30°</div>
@@ -290,7 +334,10 @@
                                     <!-- 6. CHANCE OF RAIN -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                                            </svg>
                                             <span class="metric-name">CHANCE OF RAIN</span>
                                         </div>
                                         <div class="metric-value" id="exp-rain-val">0%</div>
@@ -299,7 +346,11 @@
                                     <!-- 7. PRESSURE -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.8 5.6-5.6 2.8 2.8-5.6z"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="m16.2 7.8-2.8 5.6-5.6 2.8 2.8-5.6z" />
+                                            </svg>
                                             <span class="metric-name">PRESSURE</span>
                                         </div>
                                         <div class="metric-value" id="exp-pressure-val">1008 hPa</div>
@@ -308,7 +359,17 @@
                                     <!-- 8. SUNSET -->
                                     <div class="detail-metric-card">
                                         <div class="metric-top">
-                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10V2"/><path d="m4.93 10.93 1.41-1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41-1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
+                                            <svg class="metric-icon" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M12 10V2" />
+                                                <path d="m4.93 10.93 1.41-1.41" />
+                                                <path d="M2 18h2" />
+                                                <path d="M20 18h2" />
+                                                <path d="m19.07 10.93-1.41-1.41" />
+                                                <path d="M22 22H2" />
+                                                <path d="m16 6-4 4-4-4" />
+                                                <path d="M16 18a4 4 0 0 0-8 0" />
+                                            </svg>
                                             <span class="metric-name">SUNSET</span>
                                         </div>
                                         <div class="metric-value" id="exp-sunset-val">20:58</div>
@@ -320,9 +381,10 @@
 
                         <!-- Right Column: Forecast Column -->
                         <div class="side-column">
-                            
+
                             <!-- When expanded, Top shows 3-hour Today's Forecast -->
-                            <section class="card-widget hourly-forecast-card expanded-side-widget" id="side-hourly-card">
+                            <section class="card-widget hourly-forecast-card expanded-side-widget"
+                                id="side-hourly-card">
                                 <div class="widget-header">
                                     <h3 class="widget-title">TODAY'S FORECAST</h3>
                                 </div>
@@ -347,24 +409,21 @@
 
                     <!-- ================= TAB 2: CITIES TAB (WORLDWIDE & COUNTRIES) ================= -->
                     <main class="cities-layout tab-pane" id="pane-cities">
-                        
+
                         <!-- Left Cities List Column -->
                         <div class="cities-list-column">
                             <!-- Search Bar inside Cities -->
                             <div class="search-wrapper">
                                 <div class="search-input-box">
-                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     </svg>
-                                    <input 
-                                        type="text" 
-                                        id="cities-tab-search-input" 
-                                        class="search-input" 
-                                        placeholder="Search by city or country name..."
-                                        autocomplete="off"
-                                    >
-                                    <button id="cities-tab-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                    <input type="text" id="cities-tab-search-input" class="search-input"
+                                        placeholder="Search by city or country name..." autocomplete="off">
+                                    <button id="cities-tab-search-btn" class="search-submit-btn"
+                                        title="Search City">Search</button>
                                 </div>
                                 <div id="cities-search-spinner" class="search-spinner hidden"></div>
                                 <div id="cities-search-dropdown" class="search-dropdown hidden"></div>
@@ -393,7 +452,7 @@
                         <!-- Right Selected City Weather Detail Panel -->
                         <div class="city-detail-column">
                             <div class="city-detail-card">
-                                
+
                                 <!-- Header Section -->
                                 <div class="city-detail-header">
                                     <div class="city-detail-title-group">
@@ -404,12 +463,14 @@
                                         <div class="time-and-rain">
                                             <span class="detail-live-clock" id="detail-live-clock">--:-- --</span>
                                             <span class="time-dot">•</span>
-                                            <span class="detail-rain-chance" id="detail-rain-chance">Chance of rain: 0%</span>
+                                            <span class="detail-rain-chance" id="detail-rain-chance">Chance of rain:
+                                                0%</span>
                                         </div>
                                         <div class="detail-temp" id="detail-temp">31°</div>
                                     </div>
                                     <div class="detail-graphic">
-                                        <img src="assets/sun.png" alt="Weather condition" id="detail-weather-icon" class="detail-hero-img">
+                                        <img src="assets/sun.png" alt="Weather condition" id="detail-weather-icon"
+                                            class="detail-hero-img">
                                     </div>
                                 </div>
 
@@ -444,24 +505,21 @@
 
                     <!-- ================= TAB 3: MAP VIEW (GLOBAL WEATHER MAP) ================= -->
                     <main class="map-layout tab-pane" id="pane-map">
-                        
+
                         <!-- Left Map Canvas Area -->
                         <div class="map-main-column">
                             <!-- Map Search Bar -->
                             <div class="search-wrapper">
                                 <div class="search-input-box">
-                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     </svg>
-                                    <input 
-                                        type="text" 
-                                        id="map-search-input" 
-                                        class="search-input" 
-                                        placeholder="Search any country or city on map..."
-                                        autocomplete="off"
-                                    >
-                                    <button id="map-search-btn" class="search-submit-btn" title="Search Region">Search</button>
+                                    <input type="text" id="map-search-input" class="search-input"
+                                        placeholder="Search any country or city on map..." autocomplete="off">
+                                    <button id="map-search-btn" class="search-submit-btn"
+                                        title="Search Region">Search</button>
                                 </div>
                                 <div id="map-search-spinner" class="search-spinner hidden"></div>
                                 <div id="map-search-dropdown" class="search-dropdown hidden"></div>
@@ -478,17 +536,24 @@
 
                             <!-- Interactive Map Canvas Card -->
                             <div class="interactive-map-card" id="map-interactive-container">
-                                
+
                                 <!-- Done Button (Top Left) -->
                                 <button class="map-btn-done" id="map-done-btn">Done</button>
 
                                 <!-- Topographical Terrain SVG Map -->
                                 <div class="map-terrain-viewport" id="map-terrain-viewport">
-                                    <svg class="map-terrain-svg" id="map-svg-element" viewBox="0 0 800 600" preserveAspectRatio="none">
-                                        <rect width="800" height="600" fill="#6bb8f6"/>
-                                        <path id="map-land-path" d="M 0,0 L 800,0 L 800,320 C 720,290 680,240 620,230 C 560,220 540,260 480,280 C 440,300 400,380 390,460 C 370,520 300,560 220,540 C 180,530 140,490 120,440 C 90,380 40,360 0,330 Z" fill="#93dc72"/>
-                                        <path d="M 0,330 C 50,350 90,370 120,430 C 140,480 180,520 220,530 C 290,550 360,510 380,450 C 390,370 430,290 470,270 C 530,250 550,210 610,220 C 670,230 710,280 800,310 L 800,600 L 0,600 Z" fill="#5fa9ea" opacity="0.45"/>
-                                        <path id="map-elevation-path" d="M 160,80 C 240,60 380,90 460,110 C 530,130 620,180 600,240 C 580,300 520,320 450,350 C 380,380 340,460 270,480 C 210,490 180,450 170,410 C 160,370 210,330 230,280 C 250,230 200,190 170,160 C 150,130 140,90 160,80 Z" fill="#ffffff" opacity="0.88"/>
+                                    <svg class="map-terrain-svg" id="map-svg-element" viewBox="0 0 800 600"
+                                        preserveAspectRatio="none">
+                                        <rect width="800" height="600" fill="#6bb8f6" />
+                                        <path id="map-land-path"
+                                            d="M 0,0 L 800,0 L 800,320 C 720,290 680,240 620,230 C 560,220 540,260 480,280 C 440,300 400,380 390,460 C 370,520 300,560 220,540 C 180,530 140,490 120,440 C 90,380 40,360 0,330 Z"
+                                            fill="#93dc72" />
+                                        <path
+                                            d="M 0,330 C 50,350 90,370 120,430 C 140,480 180,520 220,530 C 290,550 360,510 380,450 C 390,370 430,290 470,270 C 530,250 550,210 610,220 C 670,230 710,280 800,310 L 800,600 L 0,600 Z"
+                                            fill="#5fa9ea" opacity="0.45" />
+                                        <path id="map-elevation-path"
+                                            d="M 160,80 C 240,60 380,90 460,110 C 530,130 620,180 600,240 C 580,300 520,320 450,350 C 380,380 340,460 270,480 C 210,490 180,450 170,410 C 160,370 210,330 230,280 C 250,230 200,190 170,160 C 150,130 140,90 160,80 Z"
+                                            fill="#ffffff" opacity="0.88" />
                                     </svg>
 
                                     <!-- Floating Weather City Cards on Map -->
@@ -503,7 +568,7 @@
                                     <button class="map-ctrl-btn" id="map-zoom-out" title="Zoom Out">−</button>
                                     <button class="map-ctrl-btn" id="map-recenter" title="Recenter Location">
                                         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                            <path d="M12 2L2 22l10-4 10 4L12 2z"/>
+                                            <path d="M12 2L2 22l10-4 10 4L12 2z" />
                                         </svg>
                                     </button>
                                 </div>
@@ -512,14 +577,17 @@
                                 <div class="map-lock-overlay" id="map-lock-overlay">
                                     <div class="lock-modal-card">
                                         <div class="lock-icon-badge">
-                                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none"
+                                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                                stroke-linejoin="round">
                                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                             </svg>
                                         </div>
                                         <span class="lock-pro-pill">PRO FEATURE</span>
                                         <h3 class="lock-title">Global Weather Map is Locked</h3>
-                                        <p class="lock-desc">Subscribe to Breeze PRO to unlock 3D terrain radar, live global weather pins, deep zoom, and all worldwide cities.</p>
+                                        <p class="lock-desc">Subscribe to Breeze PRO to unlock 3D terrain radar, live
+                                            global weather pins, deep zoom, and all worldwide cities.</p>
                                         <ul class="lock-perks-list">
                                             <li><span>✨</span> 3D Terrain & Satellite View</li>
                                             <li><span>🌍</span> 50+ Global Weather Badges</li>
@@ -545,25 +613,22 @@
 
                     <!-- ================= TAB 4: SETTINGS TAB (FULL WORKING SETTINGS) ================= -->
                     <main class="settings-layout tab-pane" id="pane-settings">
-                        
+
                         <!-- Left Column: Units, Notifications & General -->
                         <div class="settings-main-column">
-                            
+
                             <!-- Settings Search Bar -->
                             <div class="search-wrapper">
                                 <div class="search-input-box">
-                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     </svg>
-                                    <input 
-                                        type="text" 
-                                        id="settings-search-input" 
-                                        class="search-input" 
-                                        placeholder="Search for cities"
-                                        autocomplete="off"
-                                    >
-                                    <button id="settings-search-btn" class="search-submit-btn" title="Search City">Search</button>
+                                    <input type="text" id="settings-search-input" class="search-input"
+                                        placeholder="Search for cities" autocomplete="off">
+                                    <button id="settings-search-btn" class="search-submit-btn"
+                                        title="Search City">Search</button>
                                 </div>
                                 <div id="settings-search-spinner" class="search-spinner hidden"></div>
                                 <div id="settings-search-dropdown" class="search-dropdown hidden"></div>
@@ -573,7 +638,7 @@
                             <div class="settings-group-section">
                                 <h3 class="settings-section-title">Units</h3>
                                 <div class="settings-card units-card">
-                                    
+
                                     <!-- TEMPERATURE -->
                                     <div class="unit-row">
                                         <span class="unit-label">TEMPERATURE</span>
@@ -679,7 +744,7 @@
                                     <span class="pro-status-badge" id="settings-pro-badge">FREE TIER</span>
                                 </div>
                                 <div class="advanced-divider"></div>
-                                
+
                                 <h3 class="advanced-subtitle">Unlock Full Global Power</h3>
                                 <ul class="advanced-features-list">
                                     <li>• 🌍 100% Unlocked Global Radar Map</li>
@@ -691,7 +756,8 @@
                                 <h4 class="advanced-hero-text">Never forget your umbrella!</h4>
 
                                 <div class="pricing-box">
-                                    <p class="pricing-desc">Subscribe today and get instant unlimited access across all your devices.</p>
+                                    <p class="pricing-desc">Subscribe today and get instant unlimited access across all
+                                        your devices.</p>
                                     <div class="price-tag">
                                         <span class="price-amount">$5.99</span>
                                         <span class="price-period">/month</span>
@@ -701,11 +767,12 @@
                                 <button class="btn-signup-premium" id="btn-signup-premium">
                                     <span>👑 Upgrade to Breeze PRO</span>
                                 </button>
-                                
+
                                 <!-- Testing Switch for User to easily toggle Free and Pro -->
                                 <div class="test-pro-toggle-box">
                                     <div class="toggle-info">
-                                        <span class="toggle-label" style="font-size: 0.8rem; color: #64748b;">🧪 Pro Mode Switch (Demo)</span>
+                                        <span class="toggle-label" style="font-size: 0.8rem; color: #64748b;">🧪 Pro
+                                            Mode Switch (Demo)</span>
                                     </div>
                                     <label class="switch">
                                         <input type="checkbox" id="test-pro-mode-toggle">
@@ -731,12 +798,13 @@
         <div class="modal-container">
             <!-- Close Button -->
             <button class="modal-close-btn" id="modal-close-btn" title="Close Checkout">&times;</button>
-            
+
             <!-- Modal Header -->
             <div class="modal-header">
                 <div class="modal-crown-badge">👑</div>
                 <h2 class="modal-title">Upgrade to Breeze PRO</h2>
-                <p class="modal-subtitle">Unlock the interactive global weather map, all 50+ world cities & real-time radar alerts.</p>
+                <p class="modal-subtitle">Unlock the interactive global weather map, all 50+ world cities & real-time
+                    radar alerts.</p>
             </div>
 
             <!-- Plan Picker -->
@@ -791,18 +859,21 @@
             <form id="subscription-form" class="checkout-form" onsubmit="return false;">
                 <div class="form-group">
                     <label class="form-label" for="cardholder-name">Full Name</label>
-                    <input type="text" id="cardholder-name" class="form-input" placeholder="e.g. Ahmed Khan" required autocomplete="name">
+                    <input type="text" id="cardholder-name" class="form-input" placeholder="e.g. Ahmed Khan" required
+                        autocomplete="name">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="cardholder-email">Email Address</label>
-                    <input type="email" id="cardholder-email" class="form-input" placeholder="name@example.com" required autocomplete="email">
+                    <input type="email" id="cardholder-email" class="form-input" placeholder="name@example.com" required
+                        autocomplete="email">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="card-number">Card Number</label>
                     <div class="card-input-wrapper">
-                        <input type="text" id="card-number" class="form-input" placeholder="4242 •••• •••• 4242" maxlength="19" required autocomplete="cc-number">
+                        <input type="text" id="card-number" class="form-input" placeholder="4242 •••• •••• 4242"
+                            maxlength="19" required autocomplete="cc-number">
                         <div class="card-brands">
                             <span>💳</span>
                         </div>
@@ -812,11 +883,13 @@
                 <div class="form-row-grid">
                     <div class="form-group">
                         <label class="form-label" for="card-expiry">Expiry Date</label>
-                        <input type="text" id="card-expiry" class="form-input" placeholder="MM / YY" maxlength="7" required autocomplete="cc-exp">
+                        <input type="text" id="card-expiry" class="form-input" placeholder="MM / YY" maxlength="7"
+                            required autocomplete="cc-exp">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="card-cvc">CVC / CVV</label>
-                        <input type="text" id="card-cvc" class="form-input" placeholder="CVC" maxlength="4" required autocomplete="cc-csc">
+                        <input type="text" id="card-cvc" class="form-input" placeholder="CVC" maxlength="4" required
+                            autocomplete="cc-csc">
                     </div>
                 </div>
 
@@ -838,4 +911,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
